@@ -17,3 +17,13 @@
     padding: 10px;
     background-color: white;
 }
+
+/*`CSS for the ranking table*/
+table {
+    border: 1px solid black;
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+    padding: 20px;
+    background-color: lightgray;
+}
