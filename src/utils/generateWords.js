@@ -17,7 +17,19 @@ function generateWords(numberToPick, conCatWith, wordLength) {
         if (conCatWith === 1 || conCatWith > (numberToPick / 2)){
             resultReturn = res.data;
         } else {
-
+            // let noOfReturn = Math.floor(numberToPick / conCatWith);
+            // if (numberToPick /conCatWith > noOfReturn){
+            //     noOfReturn++;
+            // }
+            // console.log("In loop ", noOfReturn);
+            // let j = 0;
+            // for (let i=0;i<res.data.length; i++){
+            //     j = i % noOfReturn;
+            //     console.log(i, "", j, "", i % noOfReturn)
+            //     if (resultReturn[j] == null){
+            //         resultReturn[j] = "";
+            //     }
+            //     resultReturn[j] = resultReturn[j] + " " + res.data[i];
             let currentRow = 0;
             for (let i=0;i<res.data.length;i++){
                 if (i % conCatWith == 0){
@@ -27,7 +39,8 @@ function generateWords(numberToPick, conCatWith, wordLength) {
 
                 resultReturn[currentRow] = resultReturn[currentRow] + " " + res.data[i];
                 
-            }            
+            }
+            
         }
         console.log(resultReturn);
     }
@@ -36,5 +49,5 @@ function generateWords(numberToPick, conCatWith, wordLength) {
 
 };
     
-// generateWords(28, 4, 3);
-// generateWords(28);
+generateWords(26, 4, 3);
+// generateWords(13);
