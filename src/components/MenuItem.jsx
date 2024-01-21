@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 function MenuItem() {
   return (
     <div>
-      <ul className="nav nav-tabs">
+      <ul id="menuItem" className="nav nav-tabs">
         <li className="btn btn-primary btn-lg" role="button">
           <NavLink
             to="/startGame"
