@@ -1,8 +1,11 @@
+import React, { useEffect, useState } from "react";
 import wordsPickingAPI from './wordsPickingAPI';
+let resultReturn = [];
 
+const GenerateWords = async (numberToPick, conCatWith, wordLength) => {
 
-function generateWords(numberToPick, conCatWith, wordLength) {
-    var resultReturn = [];
+    // const [resultReturn, setResultReturn] = useState([]);
+
     if (conCatWith == null){
         conCatWith = 1;
     }
@@ -11,9 +14,9 @@ function generateWords(numberToPick, conCatWith, wordLength) {
     if (wordLength != null) {
         query = query + "&length=" + wordLength;
     }
-    wordsPickingAPI.search(query)
+    await wordsPickingAPI.search(query)
     .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (conCatWith === 1 || conCatWith > (numberToPick / 2)){
             resultReturn = res.data;
         } else {
@@ -42,12 +45,17 @@ function generateWords(numberToPick, conCatWith, wordLength) {
             }
             
         }
-        console.log(resultReturn);
+        // console.log("Inside generateWords ", resultReturn);
+        // setResultReturn(resultReturn);
+        localStorage.setItem("WordList", JSON.stringify(resultReturn) );
+        return resultReturn;
     }
     )
     .catch((err) => console.log(err));
 
 };
     
-generateWords(26, 4, 3);
+//generateWords(26, 4, 3);
 // generateWords(13);
+
+export default GenerateWords;
