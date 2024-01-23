@@ -11,6 +11,7 @@ import Wrapper from './components/Wrapper';
 function App() {
 
   return (
+    <Wrapper>
     <Router>
     <div className="jumbotron">
       <div id="mainMenu" className="show">
@@ -36,6 +37,7 @@ function App() {
       </footer>
     </div>
   </Router>
+  </Wrapper>
   )
 }
 
