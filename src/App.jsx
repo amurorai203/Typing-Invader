@@ -5,6 +5,7 @@ import viteLogo from '/vite.svg'
 import StartGame from './components/pages/startGame';
 import HighScores from './components/pages/scorelist';
 import MenuItem from './components/MenuItem';
+import Wrapper from './components/Wrapper';
 
 
 function App() {
