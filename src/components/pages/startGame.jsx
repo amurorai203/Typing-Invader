@@ -6,6 +6,7 @@ import Container from '../Container';
 const allowTimePerQuestion = 1.2;
 const lifes = 5;
 let wordList = [];
+let currentInputCount = 0;
 
 function start(wordToType) {
   // Define total seconds for the game
@@ -28,8 +29,6 @@ function startGame() {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
   const [error, setError] = useState('');
-
-  console.log("In startGame");
 
   // const menuItem = document.getElementById('mainMenu');
   const menuItem = document.getElementById("menuItem");
@@ -54,7 +53,7 @@ function startGame() {
   const [wordIndex, setWordIndex] = useState(1);
   const [userInput, setUserInput] = useState("");
 
- 
+
   // TODO: Fix the useEffect hook running after every state change.
   useEffect(() => {
     console.log("In useEffect", search, "|", !search);
@@ -107,13 +106,14 @@ function startGame() {
   }, [search]);
 
   // TODO: Fix the handleInputChange function to display the Wikipedia URL
-  const handleInputChange = (event) => {
-    console.log("handle Input Change", event.target.value);
-    setSearch(event.target.value);
-    setUrl(event.target.vale);
+  const handleInputChange = (inputvalue) => {
+ 
+    if (wordList[wordIndex].substring(0, inputvalue.length) === inputvalue){
+      currentInputCount++;
+      console.log("Typed: ", inputvalue, " No. of KeyStroke: " + currentInputCount );
+      setUserInput(inputvalue);
+   }
   };
-
-
 
 
   function displayString() {
@@ -152,7 +152,7 @@ function startGame() {
             type="text"
             id="user-input"
             value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
+            onChange={(e) => handleInputChange(e.target.value)}
           />
         </p>
       </div>
