@@ -27,24 +27,3 @@ table {
     padding: 20px;
     background-color: lightgray;
 }
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-/* CSS for the boxes*/
-.box {
-    width: 200px;
-    height: 200px;
-    margin: 20px;
-    border: 1px solid black;
-    text-align: center;                 
-    padding: 20px;
-    background-color: lightgray;
-}
-
-.label {
-    text-align: center;
-}
