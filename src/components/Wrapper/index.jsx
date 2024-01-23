@@ -2,7 +2,7 @@ import React from "react";
 // import "./style.css";
 
 function Wrapper(props) {
-  return <div className="wrapper">{props.children}</div>;
+  return <tbody className="wrapper">{props.children}</tbody>;
 }
 
 export default Wrapper;

@@ -5,13 +5,11 @@ import viteLogo from '/vite.svg'
 import StartGame from './components/pages/startGame';
 import HighScores from './components/pages/scorelist';
 import MenuItem from './components/MenuItem';
-import Wrapper from './components/Wrapper';
 
 
 function App() {
 
   return (
-    <Wrapper>
     <Router>
     <div className="jumbotron">
       <div id="mainMenu" className="show">
@@ -37,7 +35,6 @@ function App() {
       </footer>
     </div>
   </Router>
-  </Wrapper>
   )
 }
 
