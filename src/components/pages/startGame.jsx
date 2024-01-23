@@ -60,6 +60,7 @@ function startGame() {
 
   // function to display the array, starting with [1]
   const [wordIndex, setWordIndex] = useState(1);
+  const [userInput, setUserInput] = useState("");
 
   function displayString() {
     return (
@@ -69,8 +70,17 @@ function startGame() {
       </div>
     );
   }
-  
+
   // if user input matches entire string, display next array
+
+  function matchUserInput() {
+    let userInput = document.getElementById("user-input").value;
+    if (userInput === wordList[wordIndex]) {
+      setWordIndex(wordIndex + 1);
+      console.log("match");
+      userInput.value = "";
+    }
+  }
 
   return (
     <div className="profile" id="profile">
@@ -83,7 +93,13 @@ function startGame() {
       {displayString()}
       <div>
         <p>
-          Enter text: <input type="text" id="initials" />
+          Enter text:{" "}
+          <input
+            type="text"
+            id="user-input"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+          />
         </p>
       </div>
     </div>
