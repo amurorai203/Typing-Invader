@@ -50,7 +50,6 @@ function startGame() {
   }
 
 
-
   // function to display the array, starting with [1]
   const [wordIndex, setWordIndex] = useState(1);
   const [userInput, setUserInput] = useState("");
@@ -127,8 +126,6 @@ function startGame() {
       </div>
     );
   }
-
-  // if user input matches entire string, display next array
 
   function matchUserInput() {
     let userInput = document.getElementById("user-input").value;
