@@ -5,6 +5,7 @@ import Container from '../Container';
 // var wordList = [];
 const allowTimePerQuestion = 1.2;
 const lifes = 5;
+let wordList = [];
 
 function start(wordToType) {
   // Define total seconds for the game
@@ -30,7 +31,6 @@ function startGame() {
 
   console.log("In startGame");
 
-  let wordList = [];
   // const menuItem = document.getElementById('mainMenu');
   const menuItem = document.getElementById("menuItem");
   if (menuItem != null) {
@@ -49,20 +49,6 @@ function startGame() {
     desc2Item.setAttribute("Class", "hide");
   }
 
-  generateWords(499, 12);
-  // .then((res)=> {
-  //   //the promise is resolved here
-  //   console.log(".then logic ", res);
-  // }).catch(console.error.bind(console))
-
-  wordList = JSON.parse(localStorage.getItem("WordList"));
-  // console.log("Using localstorage ", wordList);
-
-  // remove the first character of each array
-  for (let i = 1; i < wordList.length; i++) {
-    wordList[i] = wordList[i].substring(1);
-    // console.log(wordList[i]);
-  }
 
   // function to display the array, starting with [1]
   const [wordIndex, setWordIndex] = useState(1);
@@ -80,7 +66,6 @@ function startGame() {
     var query = "words=499" ;
     API.search(query)
       .then((res) => {
-        console.log("Immediate after call", res);
         if (res.data.length === 0) {
           throw new Error('No results found.');
         }
@@ -88,7 +73,6 @@ function startGame() {
           throw new Error(res.data.message);
         }
         // TODO: Use the response data to set the title and url.
-        console.log(" Triggered ", res.data);
         // 2 res is the return data
 
         let currentRow = 0;
@@ -112,7 +96,6 @@ function startGame() {
             }   
             currentRow++;                   
         }
-        console.log("resultReturn", resultReturn);
 
         // setTitle(resultReturn[0]);
         setTitle(resultReturn[0]);
@@ -131,12 +114,6 @@ function startGame() {
   };
 
 
-  return (
-    
-    <div className="profile" id="profile">
-      <Container style={{ minHeight: '100vh' }}>
-      <div className="scores"><a href="#">View Highscores</a></div>
-      <div className="timer">Time: <span id="time">0</span></div>
 
 
   function displayString() {
@@ -149,8 +126,6 @@ function startGame() {
       </div>
     );
   }
-
-  // if user input matches entire string, display next array
 
   function matchUserInput() {
     let userInput = document.getElementById("user-input").value;
@@ -181,9 +156,7 @@ function startGame() {
           />
         </p>
       </div>
-      </Container>
     </div>
   );
-}
-
+  }
 export default startGame;
