@@ -3,24 +3,34 @@ import React, { useState, useEffect } from 'react';
 import API from '../../utils/wordsPickingAPI';
 import Container from '../Container';
 // var wordList = [];
-const allowTimePerQuestion = 1.2;
+const allowTimePerQuestion = 0.7;
 const lifes = 5;
 let wordList = [];
 let currentInputCount = 0;
+let secondsLeft = 0;
 
-function start(wordToType) {
+function startTimer(wordToType) {
   // Define total seconds for the game
-  let secondsLeft = wordToType.length * allowTimePerQuestion;
-  let timerObj = document.getElementById("#time");
+  
+  secondsLeft = Math.floor(wordToType.length * allowTimePerQuestion);
+  let timerObj = document.getElementById("time");
 
-  var timerInterval = setInterval(function () {
+  let timerInterval = setInterval(function () {
     // Print time left for the game
     timerObj.textContent = secondsLeft + " seconds left";
     // Define criteria for loading next question(Current question timeout, total time runs out, question being answered)
 
-    secondsLeft--;
-    currentQuestionTimeLeft--;
+    if (secondsLeft > 1)
+      secondsLeft--;
+    if (secondsLeft < 0){
+      clearInterval(timerInterval);
+      endGame();
+    } 
   }, 1000);
+}
+
+function endGame(){
+
 }
 
 // Define the home profile showing basic information and education background
@@ -107,11 +117,20 @@ function startGame() {
 
   // TODO: Fix the handleInputChange function to display the Wikipedia URL
   const handleInputChange = (inputvalue) => {
- 
+    if (inputvalue.length == 1){
+      let currentWord = document.getElementById("question-title").textContent;
+      startTimer(currentWord);}
+
     if (wordList[wordIndex].substring(0, inputvalue.length) === inputvalue){
       currentInputCount++;
-      console.log("Typed: ", inputvalue, " No. of KeyStroke: " + currentInputCount );
+      // console.log("Typed: ", inputvalue, " No. of KeyStroke: " + currentInputCount );
       setUserInput(inputvalue);
+      if (inputvalue == wordList[wordIndex]){
+        setWordIndex(wordIndex + 1);
+        setUserInput("");
+        // console.log(wordList[wordIndex + 1], " ", wordList[wordIndex + 1].length);
+        // secondsLeft = Math.floor(wordList[wordIndex + 1].length * allowTimePerQuestion);
+      }
    }
   };
 
