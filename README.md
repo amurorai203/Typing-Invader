@@ -15,6 +15,7 @@ npm install
 \```
 
 ## Demo
+./src/assets/chrome_49LAiXHWdf.gif
 
 
 ## Usage
