@@ -71,9 +71,10 @@ function endGame(){
   inputIncorrect();
   const scoreText = "Your score is: " + currentInputCount;
   document.getElementById("question-title").textContent = scoreText;
+  const inputEle = document.getElementById("input-area");
+  inputEle.textContent = "END GAME";
 
-  var objItem = Object.create(scoreClass);
- 
+  var objItem = Object.create(scoreClass); 
   let userName = document.getElementById("user-name").value;
   if (userName == '') {userName = "anonymous with IP " + ipaddress};
   objItem.name = userName;
@@ -260,7 +261,7 @@ function startGame() {
       {displayString()}
       {splitString()}
       <div>
-        <p>
+        <p id="input-area">
           Enter text:{" "}
           <input
             type="text"
