@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 // import generateWords from '../../utils/generateWords.js';
 import API from '../../utils/wordsPickingAPI';
+import * as scoreUtil from '../../utils/scores';
 import Container from '../Container';
+import dayjs from 'dayjs';
 // var wordList = [];
 const allowTimePerQuestion = 0.7;
 const lifes = 5;
 let wordList = [];
+var scoreList = [];
 let currentInputCount = 0;
 let secondsLeft = 0;
 let completeWord = false;
+const scoreClass = {
+  id: 0,
+  name: "",
+  gameMode: "",
+  dateTime: "",
+  score: 0
+}
 
 
 function startTimer(wordToType) {
@@ -40,28 +50,36 @@ function startTimer(wordToType) {
 
 function inputCorrect(){
   // Print correct sound
-  var audio = new Audio("../../../sfx/correct.wav");
-  audio.play();
-  // Set value and display result
+  // var audio = new Audio("../../../sfx/correct.wav");
+  // audio.play();
 }
 
 function inputIncorrect(){
   // Print incorrect sound
-  var audio = new Audio("../../../sfx/incorrect.wav");
-  audio.play();
+  // var audio = new Audio("../../../sfx/incorrect.wav");
+  // audio.play();
 }
 
 function endGame(){
-// Write score
-// Please sound
-// Stop input
-console.log("In EndGame");
+
+  console.log("In EndGame");
   inputIncorrect();
   inputIncorrect();
   inputIncorrect();
   const scoreText = "Your score is: " + currentInputCount;
   document.getElementById("question-title").textContent = scoreText;
 
+  var objItem = Object.create(scoreClass);
+ 
+  let userName = document.getElementById("user-name").value;
+  if (userName == '') {userName = "anonymous"};
+  objItem.name = userName;
+  objItem.gameMode = "RandomWords";
+  objItem.dateTime = dayjs().format("DD MMM, YYYY h:mmA");
+  objItem.score = currentInputCount;
+  scoreList = scoreUtil.retrieveScore();
+  objItem.id = scoreList.length + 1;
+  scoreUtil.saveScore(objItem);
 }
 
 // Define the home profile showing basic information and education background
@@ -164,9 +182,7 @@ function startGame() {
         secondsLeft = 0;
         setWordIndex(wordIndex + 1);
         setUserInput("");
-        // console.log(wordList[wordIndex + 1], " ", wordList[wordIndex + 1].length);
-        // secondsLeft = Math.floor(wordList[wordIndex + 1].length * allowTimePerQuestion);
-      } 
+       } 
     } else {
       inputIncorrect();
     }
@@ -182,18 +198,6 @@ function startGame() {
     );
   }
 
-  function displayScoreInput() {
-    return (
-      <div id="inputScore">
-        <p id="Score-title">Enter your name: 
-        <input
-            type="text"
-            id="user-name"
-            value="" />
-        </p>
-      </div>
-    );
-  }
 
   function matchUserInput() {
     let userInput = document.getElementById("user-input").value;
@@ -213,7 +217,7 @@ function startGame() {
     element.addEventListener("input", (e) => {
       let data = element.getAttribute("data-verb").toString();
       let value = e.target.value;
-      console.log(data, value)
+      // console.log(data, value)
       if (e.target.value == "") {
         element.style.border = "none";
       } else if (data.startsWith(value)) {
@@ -228,8 +232,9 @@ function startGame() {
 return (
   <div className="profile" id="profile">
     <div className="scores">
-      <a href="#">View Highscores</a>
+      Your name: <input type="text" id="user-name"/>
     </div>
+    <br></br>
     <div className="timer">
       Time: <span id="time">0</span>
     </div>
