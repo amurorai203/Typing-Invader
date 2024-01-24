@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Wrapper from '../Wrapper';
-import retrieveScore from '../../utils/scores.js';
+import {retrieveScore} from '../../utils/scores.js';
 import ScoreCard from '../ScoreCard';
 var ScoresData = [];
 
-ScoresData = retrieveScore();;
+ScoresData = retrieveScore();
 
 // Define the home profile showing basic information and education background
 function HighScores() {

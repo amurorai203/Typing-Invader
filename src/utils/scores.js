@@ -9,16 +9,16 @@ const scoreClass = {
     score: 0
 }
 
-function retrieveScore(){
+export function retrieveScore(){
     scoreList = JSON.parse(localStorage.getItem("GameScoreList"));
     if (scoreList === null){
         scoreList = [];
     }
     return scoreList;
-console.log("Inside retrieveScore ", scoreList);
+// console.log("Inside retrieveScore ", scoreList);
 }
 
-function saveScore(thisResult){
+export function saveScore(thisResult){
     scoreList.push(thisResult);
     localStorage.setItem("GameScoreList", JSON.stringify(scoreList) );
 }
@@ -39,4 +39,5 @@ function setTestData(){
 }
 
 // setTestData();
-export default retrieveScore;
+export default { retrieveScore, saveScore };
+
