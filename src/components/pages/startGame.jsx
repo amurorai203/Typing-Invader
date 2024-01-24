@@ -204,28 +204,51 @@ function startGame() {
     }
   }
 
-  return (
-    <div className="profile" id="profile">
-      <div className="scores">
-        <a href="#">View Highscores</a>
-      </div>
-      <div className="timer">
-        Time: <span id="time">0</span>
-      </div>
-      {displayString()}
-      <div>
-        <p id="inputText">
-          Enter text:{" "}
-          <input
-            type="text"
-            id="user-input"
-            value={userInput}
-            onChange={(e) => handleInputChange(e.target.value)}
-          />
-        </p>
-      </div>
+ // split up string into individual characters and match them with the user input
 
-    </div>
+ function splitString() {
+  let all = document.querySelectorAll(".input_Text");
+
+  all.forEach((element) =>
+    element.addEventListener("input", (e) => {
+      let data = element.getAttribute("data-verb").toString();
+      let value = e.target.value;
+      console.log(data, value)
+      if (e.target.value == "") {
+        element.style.border = "none";
+      } else if (data.startsWith(value)) {
+        element.style.border = "5px solid green";
+      } else {
+        element.style.border = "5px solid red";
+      }
+    })
   );
+}
+
+return (
+  <div className="profile" id="profile">
+    <div className="scores">
+      <a href="#">View Highscores</a>
+    </div>
+    <div className="timer">
+      Time: <span id="time">0</span>
+    </div>
+    {displayString()}
+    {splitString()}
+    <div>
+      <p>
+        Enter text:{" "}
+        <input
+          type="text"
+          id="user-input"
+          value={userInput}
+          onChange={(e) => handleInputChange(e.target.value)}
+          data-verb={wordList[wordIndex]}
+          className="input_Text"
+        />
+      </p>
+    </div>
+  </div>
+);
   }
 export default startGame;
