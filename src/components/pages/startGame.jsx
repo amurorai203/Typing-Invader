@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import generateWords from '../../utils/generateWords.js';
 import API from '../../utils/wordsPickingAPI';
+import IPAPI from '../../utils/ipAddressAPI';
 import * as scoreUtil from '../../utils/scores';
 import Container from '../Container';
 import dayjs from 'dayjs';
@@ -12,6 +13,7 @@ var scoreList = [];
 let currentInputCount = 0;
 let secondsLeft = 0;
 let completeWord = false;
+let ipaddress = "";
 const scoreClass = {
   id: 0,
   name: "",
@@ -73,7 +75,7 @@ function endGame(){
   var objItem = Object.create(scoreClass);
  
   let userName = document.getElementById("user-name").value;
-  if (userName == '') {userName = "anonymous"};
+  if (userName == '') {userName = "anonymous with IP " + ipaddress};
   objItem.name = userName;
   objItem.gameMode = "RandomWords";
   objItem.dateTime = dayjs().format("DD MMM, YYYY h:mmA");
@@ -90,7 +92,7 @@ function startGame() {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
-
+    
   // const menuItem = document.getElementById('mainMenu');
   const menuItem = document.getElementById("menuItem");
   if (menuItem != null) {
@@ -119,6 +121,7 @@ function startGame() {
     if (!search) {
       return;
     }
+
 
     // API.searchTerms(search)
     var query = "words=499";
@@ -160,6 +163,21 @@ function startGame() {
         setTitle(resultReturn[0]);
         wordList = resultReturn;
         localStorage.setItem("WordList", JSON.stringify(resultReturn));
+
+        if (ipaddress == ""){
+          IPAPI.search()
+            .then((res) => {
+              if (res.data.length === 0) {
+                throw new Error("No results found.");
+              }
+              if (res.data.status === "error") {
+                throw new Error(res.data.message);
+              }
+              console.log(res.data);
+              ipaddress = res.data
+            })
+            .catch((err) => setError(err));
+        }
       })
       .catch((err) => setError(err));
     // 1 after every state change
