@@ -53,14 +53,14 @@ function startTimer(wordToType) {
 
 function inputCorrect(){
   // Print correct sound
-  // var audio = new Audio("../../../sfx/correct.wav");
-  // audio.play();
+  var audio = new Audio("https://typing-invader.netlify.app/sfx/correct.wav");
+  audio.play();
 }
 
 function inputIncorrect(){
   // Print incorrect sound
-  // var audio = new Audio("../../../sfx/incorrect.wav");
-  // audio.play();
+  var audio = new Audio("https://typing-invader.netlify.app/sfx/incorrect.wav");
+  audio.play();
 }
 
 function endGame(){
