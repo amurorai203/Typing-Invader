@@ -8,28 +8,59 @@ const lifes = 5;
 let wordList = [];
 let currentInputCount = 0;
 let secondsLeft = 0;
+let completeWord = false;
+
 
 function startTimer(wordToType) {
   // Define total seconds for the game
   
   secondsLeft = Math.floor(wordToType.length * allowTimePerQuestion);
   let timerObj = document.getElementById("time");
+  timerObj.textContent = secondsLeft + " seconds left";
 
   let timerInterval = setInterval(function () {
     // Print time left for the game
     timerObj.textContent = secondsLeft + " seconds left";
     // Define criteria for loading next question(Current question timeout, total time runs out, question being answered)
 
-    if (secondsLeft > 1)
+    if (secondsLeft > 0)
       secondsLeft--;
-    if (secondsLeft < 0){
+
+      if (completeWord){
+        clearInterval(timerInterval);
+      }
+
+    if (secondsLeft <= 0 && !completeWord){
       clearInterval(timerInterval);
+      timerObj.textContent = "0 seconds left";
       endGame();
     } 
   }, 1000);
 }
 
+function inputCorrect(){
+  // Print correct sound
+  var audio = new Audio("../../../sfx/correct.wav");
+  audio.play();
+  // Set value and display result
+}
+
+function inputIncorrect(){
+  // Print incorrect sound
+  var audio = new Audio("../../../sfx/incorrect.wav");
+  audio.play();
+}
+
 function endGame(){
+// Write score
+// Please sound
+// Stop input
+console.log("In EndGame");
+  inputIncorrect();
+  inputIncorrect();
+  inputIncorrect();
+  const scoreText = "Your score is: " + currentInputCount;
+  document.getElementById("question-title").textContent = scoreText;
 
 }
 
@@ -66,7 +97,7 @@ function startGame() {
 
   // TODO: Fix the useEffect hook running after every state change.
   useEffect(() => {
-    console.log("In useEffect", search, "|", !search);
+    // console.log("In useEffect", search, "|", !search);
     if (!search) {
       return;
     }
@@ -119,29 +150,47 @@ function startGame() {
   const handleInputChange = (inputvalue) => {
     if (inputvalue.length == 1){
       let currentWord = document.getElementById("question-title").textContent;
-      startTimer(currentWord);}
+      startTimer(currentWord);
+    }
 
     if (wordList[wordIndex].substring(0, inputvalue.length) === inputvalue){
-      currentInputCount++;
+     currentInputCount++;
+     completeWord = false;
       // console.log("Typed: ", inputvalue, " No. of KeyStroke: " + currentInputCount );
       setUserInput(inputvalue);
       if (inputvalue == wordList[wordIndex]){
+        inputCorrect();
+        completeWord = true;
+        secondsLeft = 0;
         setWordIndex(wordIndex + 1);
         setUserInput("");
         // console.log(wordList[wordIndex + 1], " ", wordList[wordIndex + 1].length);
         // secondsLeft = Math.floor(wordList[wordIndex + 1].length * allowTimePerQuestion);
-      }
-   }
+      } 
+    } else {
+      inputIncorrect();
+    }
   };
 
 
   function displayString() {
     return (
       <div id="questions" className="show">
-
         <h2 id="question-title">{wordList[wordIndex]}</h2>
-
         <div id="choices" className="choices"></div>
+      </div>
+    );
+  }
+
+  function displayScoreInput() {
+    return (
+      <div id="inputScore">
+        <p id="Score-title">Enter your name: 
+        <input
+            type="text"
+            id="user-name"
+            value="" />
+        </p>
       </div>
     );
   }
@@ -165,7 +214,7 @@ function startGame() {
       </div>
       {displayString()}
       <div>
-        <p>
+        <p id="inputText">
           Enter text:{" "}
           <input
             type="text"
@@ -175,6 +224,7 @@ function startGame() {
           />
         </p>
       </div>
+
     </div>
   );
   }
