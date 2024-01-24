@@ -218,7 +218,7 @@ function startGame() {
       element.addEventListener("input", (e) => {
         let data = element.getAttribute("data-verb").toString();
         let value = e.target.value;
-        console.log(data, value)
+        // console.log(data, value)
         if (e.target.value == "") {
           element.style.border = "none";
         } else if (data.startsWith(value)) {
@@ -232,9 +232,10 @@ function startGame() {
 
   return (
     <div className="profile" id="profile">
-      <div className="scores">
-        <a href="#">View Highscores</a>
-      </div>
+    <div className="scores">
+      Your name: <input type="text" id="user-name"/>
+    </div>
+    <br></br>
       <div className="timer">
         Time: <span id="time">0</span>
       </div>
