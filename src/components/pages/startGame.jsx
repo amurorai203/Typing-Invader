@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // import generateWords from '../../utils/generateWords.js';
-import API from '../../utils/wordsPickingAPI';
-import Container from '../Container';
+import API from "../../utils/wordsPickingAPI";
+import Container from "../Container";
 // var wordList = [];
 const allowTimePerQuestion = 0.7;
 const lifes = 5;
@@ -13,7 +13,7 @@ let completeWord = false;
 
 function startTimer(wordToType) {
   // Define total seconds for the game
-  
+
   secondsLeft = Math.floor(wordToType.length * allowTimePerQuestion);
   let timerObj = document.getElementById("time");
   timerObj.textContent = secondsLeft + " seconds left";
@@ -34,9 +34,10 @@ function startTimer(wordToType) {
       clearInterval(timerInterval);
       timerObj.textContent = "0 seconds left";
       endGame();
-    } 
+    }
   }, 1000);
 }
+
 
 function inputCorrect(){
   // Print correct sound
@@ -64,12 +65,13 @@ console.log("In EndGame");
 
 }
 
+
 // Define the home profile showing basic information and education background
 function startGame() {
-  const [search, setSearch] = useState('Wikipedia');
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
-  const [error, setError] = useState('');
+  const [search, setSearch] = useState("Wikipedia");
+  const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
+  const [error, setError] = useState("");
 
   // const menuItem = document.getElementById('mainMenu');
   const menuItem = document.getElementById("menuItem");
@@ -89,11 +91,9 @@ function startGame() {
     desc2Item.setAttribute("Class", "hide");
   }
 
-
   // function to display the array, starting with [1]
   const [wordIndex, setWordIndex] = useState(1);
   const [userInput, setUserInput] = useState("");
-
 
   // TODO: Fix the useEffect hook running after every state change.
   useEffect(() => {
@@ -103,13 +103,13 @@ function startGame() {
     }
 
     // API.searchTerms(search)
-    var query = "words=499" ;
+    var query = "words=499";
     API.search(query)
       .then((res) => {
         if (res.data.length === 0) {
-          throw new Error('No results found.');
+          throw new Error("No results found.");
         }
-        if (res.data.status === 'error') {
+        if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
         // TODO: Use the response data to set the title and url.
@@ -118,40 +118,42 @@ function startGame() {
         let currentRow = 0;
         let resultReturn = [];
         let randomMax = 12;
-      
+
         // console.log(res.data);
-        for (let i=1;i<res.data.length;i++){
-            let currentMax = Math.floor(Math.random() * randomMax) + 1
-            for (let j=0;j<currentMax;j++){
-                if (currentMax < res.data.length){
-                    if (res.data[i] != null){
-                        if (j > 0){
-                            resultReturn[currentRow] = resultReturn[currentRow] + " " + res.data[i];
-                        } else{
-                            resultReturn[currentRow] = res.data[i];
-                        }
-                    }
-                    i++;
+        for (let i = 1; i < res.data.length; i++) {
+          let currentMax = Math.floor(Math.random() * randomMax) + 1;
+          for (let j = 0; j < currentMax; j++) {
+            if (currentMax < res.data.length) {
+              if (res.data[i] != null) {
+                if (j > 0) {
+                  resultReturn[currentRow] =
+                    resultReturn[currentRow] + " " + res.data[i];
+                } else {
+                  resultReturn[currentRow] = res.data[i];
                 }
-            }   
-            currentRow++;                   
+              }
+              i++;
+            }
+          }
+          currentRow++;
         }
 
         // setTitle(resultReturn[0]);
         setTitle(resultReturn[0]);
         wordList = resultReturn;
-        localStorage.setItem("WordList", JSON.stringify(resultReturn) );
+        localStorage.setItem("WordList", JSON.stringify(resultReturn));
       })
       .catch((err) => setError(err));
-      // 1 after every state change
+    // 1 after every state change
   }, [search]);
 
   // TODO: Fix the handleInputChange function to display the Wikipedia URL
   const handleInputChange = (inputvalue) => {
-    if (inputvalue.length == 1){
+    if (inputvalue.length === 1) {
       let currentWord = document.getElementById("question-title").textContent;
       startTimer(currentWord);
     }
+
 
     if (wordList[wordIndex].substring(0, inputvalue.length) === inputvalue){
      currentInputCount++;
@@ -171,7 +173,6 @@ function startGame() {
       inputIncorrect();
     }
   };
-
 
   function displayString() {
     return (
@@ -204,51 +205,51 @@ function startGame() {
     }
   }
 
- // split up string into individual characters and match them with the user input
+  // split up string into individual characters and match them with the user input
 
- function splitString() {
-  let all = document.querySelectorAll(".input_Text");
+  function splitString() {
+    let all = document.querySelectorAll(".input_Text");
 
-  all.forEach((element) =>
-    element.addEventListener("input", (e) => {
-      let data = element.getAttribute("data-verb").toString();
-      let value = e.target.value;
-      console.log(data, value)
-      if (e.target.value == "") {
-        element.style.border = "none";
-      } else if (data.startsWith(value)) {
-        element.style.border = "5px solid green";
-      } else {
-        element.style.border = "5px solid red";
-      }
-    })
+    all.forEach((element) =>
+      element.addEventListener("input", (e) => {
+        let data = element.getAttribute("data-verb").toString();
+        let value = e.target.value;
+        console.log(data, value)
+        if (e.target.value == "") {
+          element.style.border = "none";
+        } else if (data.startsWith(value)) {
+          element.style.border = "5px solid green";
+        } else {
+          element.style.border = "5px solid red";
+        }
+      })
+    );
+  }
+
+  return (
+    <div className="profile" id="profile">
+      <div className="scores">
+        <a href="#">View Highscores</a>
+      </div>
+      <div className="timer">
+        Time: <span id="time">0</span>
+      </div>
+      {displayString()}
+      {splitString()}
+      <div>
+        <p>
+          Enter text:{" "}
+          <input
+            type="text"
+            id="user-input"
+            value={userInput}
+            onChange={(e) => handleInputChange(e.target.value)}
+            data-verb={wordList[wordIndex]}
+            className="input_Text"
+          />
+        </p>
+      </div>
+    </div>
   );
 }
-
-return (
-  <div className="profile" id="profile">
-    <div className="scores">
-      <a href="#">View Highscores</a>
-    </div>
-    <div className="timer">
-      Time: <span id="time">0</span>
-    </div>
-    {displayString()}
-    {splitString()}
-    <div>
-      <p>
-        Enter text:{" "}
-        <input
-          type="text"
-          id="user-input"
-          value={userInput}
-          onChange={(e) => handleInputChange(e.target.value)}
-          data-verb={wordList[wordIndex]}
-          className="input_Text"
-        />
-      </p>
-    </div>
-  </div>
-);
-  }
 export default startGame;
