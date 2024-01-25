@@ -60,7 +60,7 @@ function inputIncorrect() {
 }
 
 function endGame() {
-  console.log("In EndGame");
+  // console.log("In EndGame");
   inputIncorrect();
   inputIncorrect();
   inputIncorrect();
@@ -169,7 +169,7 @@ function startGame() {
               if (res.data.status === "error") {
                 throw new Error(res.data.message);
               }
-              console.log(res.data);
+              // console.log(res.data);
               ipaddress = res.data;
             })
             .catch((err) => setError(err));
@@ -245,8 +245,8 @@ function startGame() {
   return (
     <div className="container-fluid">
       <div className="profile" id="profile">
-        <div className="scores">
-          Your name: <input type="text" id="user-name" />
+        <div className="scores" style={{fontStyle: 'italic'}}>
+          <strong>Your name: </strong><input type="text" id="user-name" style={{backgroundColor: "yellow"}}/>
         </div>
         <br></br>
       </div>
