@@ -36,7 +36,7 @@ MUI
     </tr> 
     <tr>
       <td><h5>HighScores</h5></td>
-      <td><img src="https://typing-invader.netlify.app/highScore.jpg" width="500"></td>
+      <td><img src="https://typing-invader.netlify.app/img/highScore.jpg" width="500"></td>
     </tr>
   </tbody>
 </table>
