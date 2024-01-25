@@ -41,7 +41,8 @@ MUI
   </tbody>
 </table>
 
-- [Typing Invader]([https://typing-invader.netlify.app/])
+
+- [Typing Invader](https://typing-invader.netlify.app/)
 
 
 ## Credits
