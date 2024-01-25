@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Wrapper from '../Wrapper';
 import {retrieveScore} from '../../utils/scores.js';
-import ScoreCard from '../ScoreCard';
+import ScoreCard from '../ScoreCard/ScoreCard.jsx';
 var ScoresData = [];
 
 ScoresData = retrieveScore();
