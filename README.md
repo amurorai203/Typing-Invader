@@ -7,8 +7,8 @@ Tying-Invaders is a minimalist typing game that turns practice into a thrilling 
 Technology using:
   Use ReactJS
   Using external API
-  - [Random word API]([https://random-word-api.vercel.app/])
-  - [Locate IP address API]([https://api.ipify.org])
+  - [Random word API](https://random-word-api.vercel.app/)
+  - [Locate IP address API](https://api.ipify.org)
   Deploy into Netlify thru YAML
 
 ## Installation
