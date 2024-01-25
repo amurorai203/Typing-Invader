@@ -1,4 +1,5 @@
 
+
 /* CSS for the jumbotron and button*/
 .jumbotron {
     border: 1px solid black;
@@ -27,3 +28,37 @@ table {
     padding: 20px;
     background-color: lightgray;
 }
+
+.choices div {
+    background-color: blue;
+    color: white;
+    width: 100px;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 15%;
+  }
+  
+  /* Highlight answer when mouse over */
+  .choices div:hover {
+    background-color: lightblue;
+  }
+  
+  /* Define answer result font color and style */
+  .choices h3 {
+    color: purple;
+    font-style: italic;
+  }
+  
+  /* Define highscore background color */
+  #highscores ul {
+    background-color: lightblue;
+  }
+
+  .profile, .highscores, .timer, .questions {
+    display: flex;
+    justify-content: center;
+  }
+
+  #question-title {
+    text-align: center;
+  }

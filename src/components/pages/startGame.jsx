@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 // import generateWords from '../../utils/generateWords.js';
-import API from '../../utils/wordsPickingAPI';
-import IPAPI from '../../utils/ipAddressAPI';
-import * as scoreUtil from '../../utils/scores';
-import Container from '../Container';
-import dayjs from 'dayjs';
+import API from "../../utils/wordsPickingAPI";
+import IPAPI from "../../utils/ipAddressAPI";
+import * as scoreUtil from "../../utils/scores";
+import dayjs from "dayjs";
 // var wordList = [];
 const allowTimePerQuestion = 0.7;
 const lifes = 5;
@@ -19,9 +18,8 @@ const scoreClass = {
   name: "",
   gameMode: "",
   dateTime: "",
-  score: 0
-}
-
+  score: 0,
+};
 
 function startTimer(wordToType) {
   // Define total seconds for the game
@@ -35,14 +33,13 @@ function startTimer(wordToType) {
     timerObj.textContent = secondsLeft + " seconds left";
     // Define criteria for loading next question(Current question timeout, total time runs out, question being answered)
 
-    if (secondsLeft > 0)
-      secondsLeft--;
+    if (secondsLeft > 0) secondsLeft--;
 
-      if (completeWord){
-        clearInterval(timerInterval);
-      }
+    if (completeWord) {
+      clearInterval(timerInterval);
+    }
 
-    if (secondsLeft <= 0 && !completeWord){
+    if (secondsLeft <= 0 && !completeWord) {
       clearInterval(timerInterval);
       timerObj.textContent = "0 seconds left";
       endGame();
@@ -50,21 +47,19 @@ function startTimer(wordToType) {
   }, 1000);
 }
 
-
-function inputCorrect(){
+function inputCorrect() {
   // Print correct sound
   var audio = new Audio("https://typing-invader.netlify.app/sfx/correct.wav");
   audio.play();
 }
 
-function inputIncorrect(){
+function inputIncorrect() {
   // Print incorrect sound
   var audio = new Audio("https://typing-invader.netlify.app/sfx/incorrect.wav");
   audio.play();
 }
 
-function endGame(){
-
+function endGame() {
   console.log("In EndGame");
   inputIncorrect();
   inputIncorrect();
@@ -74,9 +69,11 @@ function endGame(){
   const inputEle = document.getElementById("input-area");
   inputEle.textContent = "END GAME";
 
-  var objItem = Object.create(scoreClass); 
+  var objItem = Object.create(scoreClass);
   let userName = document.getElementById("user-name").value;
-  if (userName == '') {userName = "anonymous with IP " + ipaddress};
+  if (userName == "") {
+    userName = "anonymous with IP " + ipaddress;
+  }
   objItem.name = userName;
   objItem.gameMode = "RandomWords";
   objItem.dateTime = dayjs().format("DD MMM, YYYY h:mmA");
@@ -86,14 +83,13 @@ function endGame(){
   scoreUtil.saveScore(objItem);
 }
 
-
 // Define the home profile showing basic information and education background
 function startGame() {
   const [search, setSearch] = useState("Wikipedia");
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
-    
+
   // const menuItem = document.getElementById('mainMenu');
   const menuItem = document.getElementById("menuItem");
   if (menuItem != null) {
@@ -122,7 +118,6 @@ function startGame() {
     if (!search) {
       return;
     }
-
 
     // API.searchTerms(search)
     var query = "words=499";
@@ -165,7 +160,7 @@ function startGame() {
         wordList = resultReturn;
         localStorage.setItem("WordList", JSON.stringify(resultReturn));
 
-        if (ipaddress == ""){
+        if (ipaddress == "") {
           IPAPI.search()
             .then((res) => {
               if (res.data.length === 0) {
@@ -175,7 +170,7 @@ function startGame() {
                 throw new Error(res.data.message);
               }
               console.log(res.data);
-              ipaddress = res.data
+              ipaddress = res.data;
             })
             .catch((err) => setError(err));
         }
@@ -191,19 +186,18 @@ function startGame() {
       startTimer(currentWord);
     }
 
-
-    if (wordList[wordIndex].substring(0, inputvalue.length) === inputvalue){
-     currentInputCount++;
-     completeWord = false;
+    if (wordList[wordIndex].substring(0, inputvalue.length) === inputvalue) {
+      currentInputCount++;
+      completeWord = false;
       // console.log("Typed: ", inputvalue, " No. of KeyStroke: " + currentInputCount );
       setUserInput(inputvalue);
-      if (inputvalue == wordList[wordIndex]){
+      if (inputvalue == wordList[wordIndex]) {
         inputCorrect();
         completeWord = true;
         secondsLeft = 0;
         setWordIndex(wordIndex + 1);
         setUserInput("");
-       } 
+      }
     } else {
       inputIncorrect();
     }
@@ -217,7 +211,6 @@ function startGame() {
       </div>
     );
   }
-
 
   function matchUserInput() {
     let userInput = document.getElementById("user-input").value;
@@ -250,28 +243,52 @@ function startGame() {
   }
 
   return (
-    <div className="profile" id="profile">
-    <div className="scores">
-      Your name: <input type="text" id="user-name"/>
-    </div>
-    <br></br>
-      <div className="timer">
-        Time: <span id="time">0</span>
+    <div className="container-fluid">
+      <div className="profile" id="profile">
+        <div className="scores">
+          Your name: <input type="text" id="user-name" />
+        </div>
+        <br></br>
       </div>
-      {displayString()}
-      {splitString()}
-      <div>
-        <p id="input-area">
-          Enter text:{" "}
-          <input
-            type="text"
-            id="user-input"
-            value={userInput}
-            onChange={(e) => handleInputChange(e.target.value)}
-            data-verb={wordList[wordIndex]}
-            className="input_Text"
-          />
-        </p>
+      <div className="row">
+        <div
+          className="timer"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+          }}
+        >
+          Time: <span id="time">0</span>
+        </div>
+        {displayString()}
+        {splitString()}
+        <div
+          className="row"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p id="input-area">
+            Enter text:{" "}
+            <input
+              type="text"
+              id="user-input"
+              value={userInput}
+              onChange={(e) => handleInputChange(e.target.value)}
+              data-verb={wordList[wordIndex]}
+              className="input_Text"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            />
+          </p>
+        </div>
       </div>
     </div>
   );
