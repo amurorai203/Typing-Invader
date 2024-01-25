@@ -5,11 +5,11 @@ Bootcamp Project 2 single page application using react.
 
 Tying-Invaders is a minimalist typing game that turns practice into a thrilling battle against the clock. 
 Technology using:
-  Use ReactJS
-  Using external API
+  1) Use ReactJS
+  2) Using external API
   - [Random word API](https://random-word-api.vercel.app/)
-  - [Locate IP address API](https://api.ipify.org)
-  Deploy into Netlify thru YAML
+  - [Locate IP address API](https://api.ipify.org/)
+  3) Deploy into Netlify thru YAML
 
 ## Installation
 
