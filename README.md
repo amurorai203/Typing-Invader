@@ -20,6 +20,7 @@ vite
 axios
 dayjs
 MUI
+threejs
 
 
 ## Usage
